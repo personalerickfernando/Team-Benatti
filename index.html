@@ -12,20 +12,23 @@
             --azul-escuro: #4682b4;
         }
 
-        body {
-            body {
+         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            /* ADICIONE AS LINHAS ABAIXO */
-            background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url(perfil (2).jpeg);
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
             color: #333;
+            
+            /* CONFIGURAÇÃO DA IMAGEM DE FUNDO */
+            background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), 
+                              url('perfil (2).jpeg');
+            
+            background-size: cover;        /* Faz a foto ocupar a tela toda */
+            background-position: center;   /* Centraliza a foto */
+            background-attachment: fixed;  /* Efeito elegante: o site rola e a foto fica parada */
+            background-repeat: no-repeat;  /* Impede que a foto fique se repetindo */
         }
-        }
+        
+        
 
         header {
             background: linear-gradient(135deg, var(--azul-claro), var(--prata));
@@ -58,7 +61,7 @@
             background: #f9f9f9;
             padding: 20px;
             border-radius: 10px;
-            border-left: 5px solid var(--branco-claro);
+            border-left: 5px solid var(--vermelho-claro);
         }
 
         .planos {
@@ -68,7 +71,7 @@
         }
 
         .plano-card {
-            background: var(--branco);
+            background: var(--verde);
             border: 2px solid var(--vermelho);
             padding: 30px;
             border-radius: 15px;
@@ -81,7 +84,7 @@
             border-color: var(--vinho-escuro);
         }
 
-        .plano-card h3 { color: var(--azul-escuro); font-size: 1.5em; }
+        .plano-card h3 { color: var(--vermelho-escuro); font-size: 1.5em; }
         .preco { font-size: 2em; font-weight: bold; margin: 20px 0; color: #444; }
 
         .btn-pagamento {
