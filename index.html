@@ -10,98 +10,168 @@
     
     <style>
         :root {
-            /* PALETA DE CORES ATUALIZADA */
             --preto: #000000;
             --cinza-escuro: #333333;
             --branco: #ffffff;
-            --vermelho-pulsante: #ff0000;
-            --vermelho-hover: #cc0000;
-            /* NOVO FUNDO CLARINHO: CINZA MUITO CLARO COM OPACIDADE */
-            --fundo-opaco: rgba(240, 240, 240, 0.9); 
-            --sombra-clean: 0 4px 15px rgba(0,0,0,0.05);
+            --vermelho-vivo: #ff0000;
+            --fundo-clean-opaco: rgba(255, 255, 255, 0.96); /* Fundo branco transparente */
+            --glow-branco: 0 0 15px rgba(255, 255, 255, 0.7);
+            --glow-vermelho: 0 0 20px rgba(255, 0, 0, 0.5);
         }
 
         body {
-            /* FONTE POPPINS PARA O CORPO DO TEXTO (MODERNA E CLEAN) */
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
             color: var(--cinza-escuro);
             background-color: var(--branco);
+            overflow-x: hidden; /* Impede barra de rolagem horizontal pelas bolinhas */
             
-            /* FUNDO COM FOTO E PELÍCULA CLARINHA */
-            background-image: linear-gradient(var(--fundo-opaco), var(--fundo-opaco)), 
+            /* FUNDO COM FOTO E PELÍCULA BRANCA MUITO LEVE */
+            background-image: linear-gradient(var(--fundo-clean-opaco), var(--fundo-clean-opaco)), 
                               url('perfil (2).jpeg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             background-repeat: no-repeat;
+            position: relative;
         }
 
+        /* --- SISTEMA DE BOLINHAS FLUTUANTES NO FUNDO --- */
+        .fundo-animado {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Fica atrás de tudo */
+            pointer-events: none; /* Não interfere nos cliques */
+        }
+
+        .bolinha {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 0, 0, 0.1); /* Vermelho muito transparente */
+            animation: flutuar linear infinite;
+        }
+
+        /* Variações de tamanho e cor das bolinhas */
+        .bolinha:nth-child(even) { background: rgba(255, 255, 255, 0.2); } /* Brancas transparentes */
+
+        @keyframes flutuar {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-20vh) scale(1.5); opacity: 0; }
+        }
+
+        /* --- TOPO LAYOUT: FOTO DIREITA, INFO ESQUERDA --- */
         header {
             background: transparent; 
-            padding: 80px 20px;
-            text-align: center;
-        }
-
-        .perfil-container {
+            padding: 60px 20px;
             display: flex;
-            align-items: center;
             justify-content: center;
-            max-width: 1000px;
+            align-items: center;
+            max-width: 1100px;
             margin: auto;
-            position: relative;
-            gap: 30px; /* Espaço entre texto e foto */
+            gap: 40px;
         }
 
-        /* TEXTO DO CANTO ESQUERDO DO TOPO */
-        .info-erick {
-            text-align: left;
-            max-width: 300px;
+        .header-info {
+            text-align: right; /* Alinha texto à direita para 'olhar' para a foto */
+            flex: 1;
         }
 
-        .info-erick strong {
-            font-size: 1.8em;
+        .header-info strong {
+            font-size: 2.2em;
             color: var(--preto);
             letter-spacing: 1px;
+            text-shadow: var(--glow-branco); /* GLOW NA ESCRITA */
         }
 
-        .info-erick p {
+        .header-info p {
             margin-top: 5px;
-            font-size: 1.1em;
+            font-size: 1.2em;
             color: var(--cinza-escuro);
+            text-shadow: var(--glow-branco);
         }
 
-        /* FOTO EM PÉ NO MEIO DO TOPO */
+        /* FOTO MAIOR NO CANTO DIREITO COM GLOW */
+        .perfil-wrapper {
+            position: relative;
+        }
+
+        /* Glow pulsante atrás da foto */
+        .perfil-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 110%;
+            height: 110%;
+            background: radial-gradient(circle, rgba(255,0,0,0.4) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 10px;
+            z-index: -1;
+            animation: glowFoto 3s infinite ease-in-out;
+        }
+
+        @keyframes glowFoto {
+            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+        }
+
         .foto-perfil-vertical {
-            width: 200px; /* Ajuste a largura conforme sua foto */
-            height: 300px; /* Foto em pé (vertical) */
+            width: 230px; /* Um pouco maior */
+            height: 345px; /* Proporção vertical */
             border: none;
-            object-fit: cover; /* Faz a foto preencher sem distorcer */
-            box-shadow: var(--sombra-clean);
-            border-radius: 5px; /* Bordas levemente arredondadas */
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
 
-        /* FRASE IMPACTANTE AESTHETIC NO TOPO */
+        /* FRASE IMPACTANTE AESTHETIC CENTRALIZADA */
         .frase-impacto {
-            margin-top: 50px;
+            margin-top: 20px;
             font-family: 'Great Vibes', cursive;
-            font-size: 3.5em;
+            font-size: 3.8em;
             color: var(--preto);
             text-align: center;
             font-weight: normal;
+            text-shadow: var(--glow-branco);
         }
 
         .container { max-width: 1000px; margin: auto; padding: 40px 20px; }
 
+        /* CARDS COM BORDAS PRETAS E FUNDO BRANCO */
         .servico-card, .plano-card {
             background: var(--branco); 
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: var(--sombra-clean);
-            /* NOVO: BORDAS PRETAS FINAS NOS CARDS */
-            border: 1px solid var(--preto);
-            transition: transform 0.3s ease;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            border: 1px solid var(--preto); /* BORDAS PRETAS */
+            transition: 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .servico-card:hover, .plano-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+        }
+
+        /* --- ÍCONES NOS BENEFÍCIOS --- */
+        .icone-beneficio {
+            font-size: 2em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        /* --- ÍCONES NOS PLANOS --- */
+        .icone-plano {
+            font-size: 1.3em;
+            margin-right: 8px;
+            vertical-align: middle;
         }
 
         /* LETRAS NOS CARDS ARIAL E PRETO */
@@ -109,151 +179,210 @@
         .plano-card h3, .plano-card p {
             font-family: Arial, sans-serif;
             color: var(--preto);
+            text-shadow: none; /* Remove glow nos cards para limpeza */
         }
 
-        .servico-card h3, .plano-card h3 {
-            font-weight: bold;
-            font-size: 1.4em;
-        }
+        .servico-card h3, .plano-card h3 { font-weight: bold; font-size: 1.5em; margin-top: 0; }
+        .servico-card p { font-size: 1em; line-height: 1.6; }
 
         .servicos, .planos {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
-            margin-bottom: 60px;
+            margin-bottom: 70px;
         }
 
-        .preco { font-size: 2.2em; font-weight: bold; margin: 25px 0; color: var(--preto); font-family: Arial, sans-serif; }
+        .preco { font-size: 2.3em; font-weight: bold; margin: 25px 0; color: var(--preto); font-family: Arial, sans-serif; }
 
-        /* ANIMAÇÃO PULSANTE E SALTO PARA O BOTÃO DE PAGAMENTO */
-        @keyframes pulsarSalto {
-            0% { transform: scale(1); box-shadow: 0 0 0 rgba(255, 255, 255, 0); }
-            50% { transform: scale(1.05) translateY(-5px); box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.5); }
-            100% { transform: scale(1); box-shadow: 0 0 0 rgba(255, 255, 255, 0); }
+        /* --- BOTÃO DE PAGAMENTO PULSANTE AESTHETIC --- */
+        @keyframes pulsarAssine {
+            0% { transform: scale(1); border-color: var(--vermelho-vivo); }
+            50% { transform: scale(1.03); border-color: #ffcccc; box-shadow: 0 0 20px rgba(255, 0, 0, 0.2); }
+            100% { transform: scale(1); border-color: var(--vermelho-vivo); }
         }
 
-        /* BOTÃO DE PAGAMENTO "ASSINE AGORA" PULSANTE */
         .btn-assine {
             display: inline-block;
-            background-color: transparent; /* Fundo transparente */
-            color: var(--vermelho-pulsante); /* Texto Vermelho */
+            background-color: transparent;
+            color: var(--vermelho-vivo); /* Texto Vermelho */
             text-decoration: none;
-            padding: 15px 30px;
-            border: 2px solid var(--vermelho-pulsante); /* Borda Vermelha */
-            border-radius: 5px;
+            padding: 16px 32px;
+            border: 2px solid var(--vermelho-vivo);
+            border-radius: 8px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-family: Arial, sans-serif;
             transition: 0.3s;
-            animation: pulsarSalto 2s infinite ease-in-out; /* Aplica a animação */
+            animation: pulsarAssine 2.5s infinite ease-in-out;
+            text-shadow: none;
         }
 
         .btn-assine:hover { 
-            background-color: var(--vermelho-pulsante);
+            background-color: var(--vermelho-vivo);
             color: var(--branco);
-            box-shadow: 0 6px 15px rgba(255, 0, 0, 0.3);
-            animation: none; /* Para de pulsar no hover */
+            border-color: var(--vermelho-vivo);
+            animation: none;
         }
 
-        /* WHATSAPP FLUTUANTE CLEAN */
+        /* --- WHATSAPP FLUTUANTE TURBINADO --- */
+        @keyframes whatsPulsarGlow {
+            0% { transform: scale(1); box-shadow: 0 2px 5px rgba(0,0,0,0.2), 0 0 5px rgba(255,255,255,0.2); }
+            50% { transform: scale(1.08); box-shadow: 0 5px 15px rgba(0,0,0,0.3), 0 0 25px rgba(255,255,255,0.9); }
+            100% { transform: scale(1); box-shadow: 0 2px 5px rgba(0,0,0,0.2), 0 0 5px rgba(255,255,255,0.2); }
+        }
+
         .whatsapp-float {
             position: fixed;
-            width: 60px;
-            height: 60px;
+            width: 65px;
+            height: 65px;
             bottom: 40px;
             right: 40px;
             background-color: #25d366;
             color: var(--branco);
             border-radius: 50px;
-            text-align: center;
-            font-size: 30px;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-            z-index: 100;
+            z-index: 200;
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
+            /* ANIMAÇÃO PULSANTE COM GLOW BRANCO */
+            animation: whatsPulsarGlow 2s infinite ease-in-out; 
             transition: 0.3s;
         }
 
-        .whatsapp-float:hover {
-            transform: scale(1.1);
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        /* EFEITO DE BRILHOS PISCANTES AO REDOR DO WHATSAPP */
+        .whatsapp-float::after {
+            content: '';
+            position: absolute;
+            top: -15px; left: -15px; right: -15px; bottom: -15px;
+            background-image: radial-gradient(circle, #fff 10%, transparent 20%), radial-gradient(circle, #fff 10%, transparent 20%);
+            background-size: 15px 15px;
+            background-position: 0 0, 7px 7px;
+            border-radius: 50%;
+            opacity: 0;
+            animation: sparks Whats 4s infinite;
+            z-index: -1;
+        }
+
+        @keyframes sparksWhats {
+            0%, 100% { opacity: 0; transform: scale(0.8); }
+            50% { opacity: 0.4; transform: scale(1.1); }
+            25%, 75% { opacity: 0.1; }
         }
 
         footer { 
-            background: transparent; 
-            padding: 60px; 
+            background: rgba(255, 255, 255, 0.8); 
+            padding: 50px; 
             text-align: center; 
             color: var(--cinza-escuro); 
             border-top: 1px solid #eee;
+            margin-top: 50px;
         }
 
-        @media (max-width: 800px) {
-            .perfil-container { flex-direction: column-reverse; text-align: center; }
-            .info-erick { text-align: center; max-width: 100%; margin-top: 20px; }
-            .frase-impacto { font-size: 2.5em; }
+        /* Responsividade para celular */
+        @media (max-width: 850px) {
+            header { flex-direction: column-reverse; text-align: center; padding: 40px 20px; }
+            .header-info { text-align: center; max-width: 100%; margin-top: 25px; }
+            .foto-perfil-vertical { width: 200px; height: 300px; }
+            .frase-impacto { font-size: 2.8em; }
         }
     </style>
 </head>
 <body>
 
+    <div class="fundo-animado" id="fundoAnimado"></div>
+
     <header>
-        <div class="perfil-container">
-            <div class="info-erick">
-                <strong>Erick Tomaz</strong><br>
-                <p>Contato: (44) 99101-2110</p>
-            </div>
-            
-            <img src="perfil erick.jpeg" alt="Erick Tomaz" class="foto-perfil-vertical">
+        <div class="header-info">
+            <strong>Erick Tomaz</strong><br>
+            <p>Contato: (44) 99101-2110</p>
         </div>
         
-        <div class="frase-impacto">Erick Tomaz - Seu treino em foco.</div>
+        <div class="perfil-wrapper">
+            <img src="perfil erick.jpeg" alt="Erick Tomaz" class="foto-perfil-vertical">
+        </div>
     </header>
+    
+    <div class="frase-impacto">Erick Tomaz - Seu treino em foco.</div>
 
     <div class="container">
         <div class="servicos">
             <div class="servico-card">
-                <h3>Resultados Reais</h3>
-                <p>Para quem treina com dedicação e busca evolução constante.</p>
+                <span class="icone-beneficio">🏆</span> <h3>Resultados Reais</h3>
+                <p>Metodologia validada para quem busca evolução estética e performance constante.</p>
             </div>
             <div class="servico-card">
-                <h3>Início Seguro</h3>
-                <p>Metodologia focada na técnica correta desde o primeiro dia.</p>
+                <span class="icone-beneficio">🛡️</span> <h3>Início Seguro</h3>
+                <p>Foco total na técnica correta e biomecânica, prevenindo lesões desde o primeiro treino.</p>
             </div>
             <div class="servico-card">
-                <h3>Longevidade</h3>
-                <p>Treinos adaptados para saúde e performance em qualquer idade.</p>
+                <span class="icone-beneficio">⏳</span> <h3>Longevidade</h3>
+                <p>Treinos inteligentes planejados para manter sua saúde e força ao longo dos anos.</p>
             </div>
         </div>
 
         <div class="planos">
             <div class="plano-card">
-                <h3>Plano Mensal</h3>
+                <h3><span class="icone-plano">🗓️</span>Plano Mensal</h3>
+                <p>Acompanhamento e ajustes foco no mês atual.</p>
                 <div class="preco">R$ 69,90</div>
-                <a href="https://mpago.la/1kujMFz" target="_blank" class="btn-assine">ASSINE AGORA</a>
+                <a href="https://mpago.la/2EVdv2o" target="_blank" class="btn-assine">ASSINE AGORA</a>
             </div>
             <div class="plano-card">
-                <h3>Plano Único</h3>
+                <h3><span class="icone-plano">🎯</span>Plano Avulso</h3>
+                <p>Montagem de treino específica e pontual.</p>
                 <div class="preco">R$ 59,90</div>
-                <a href="https://mpago.la/1dQ771q" target="_blank" class="btn-assine">ASSINE AGORA</a>
+                <a href="https://mpago.la/12LkXkj" target="_blank" class="btn-assine">ASSINE AGORA</a>
             </div>
             <div class="plano-card">
-                <h3>Plano Semestral</h3>
+                <h3><span class="icone-plano">🚀</span>Plano Semestral</h3>
+                <p>Compromisso total com o resultado a longo prazo.</p>
                 <div class="preco">R$ 299,90</div>
-                <a href="https://mpago.la/241gf88" target="_blank" class="btn-assine">ASSINE AGORA</a>
+                <a href="https://mpago.la/2GSvATH" target="_blank" class="btn-assine">ASSINE AGORA</a>
             </div>
         </div>
     </div>
 
     <a href="https://wa.me/5544991012110?text=Olá%20Erick%20Tomaz,%20gostaria%20de%20tirar%20dúvidas%20sobre%20a%20consultoria!" class="whatsapp-float" target="_blank">
-        <svg style="width:35px;height:35px" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2C6.53 2 2.06 6.47 2.06 11.98C2.06 13.75 2.52 15.42 3.33 16.89L2.03 21.65L6.92 20.37C8.33 21.14 9.94 21.56 11.62 21.56C11.62 21.56 11.63 21.56 11.63 21.56C17.13 21.56 21.61 17.09 21.61 11.58C21.61 8.91 20.57 6.4 18.68 4.51C16.79 2.62 14.27 2 12.04 2M11.63 19.67C10.16 19.67 8.74 19.27 7.5 18.52L7.21 18.35L4.32 19.11L5.09 16.3L4.9 16C4.07 14.69 3.63 13.16 3.63 11.58C3.63 7.15 7.22 3.56 11.64 3.56C13.79 3.56 15.8 4.4 17.31 5.92C18.83 7.43 19.67 9.44 19.67 11.58C19.67 16.02 16.08 19.67 11.63 19.67M15.91 13.31C15.68 13.2 14.54 12.63 14.33 12.56C14.12 12.48 13.96 12.44 13.81 12.67C13.66 12.89 13.23 13.38 13.1 13.53C12.97 13.68 12.83 13.7 12.61 13.59C12.38 13.48 11.66 13.24 10.81 12.48C10.15 11.89 9.7 11.16 9.57 10.94C9.44 10.71 9.56 10.59 9.67 10.48C9.77 10.38 9.89 10.22 10 10.09C10.11 9.97 10.15 9.88 10.22 9.73C10.29 9.59 10.26 9.46 10.2 9.35C10.15 9.24 9.71 8.16 9.53 7.72C9.35 7.28 9.17 7.34 9.04 7.34C8.91 7.33 8.77 7.33 8.62 7.33C8.47 7.33 8.23 7.39 8.03 7.61C7.83 7.83 7.27 8.35 7.27 9.41C7.27 10.47 8.04 11.49 8.15 11.64C8.26 11.79 9.66 13.94 11.81 14.87C12.32 15.09 12.72 15.22 13.03 15.32C13.54 15.48 14 15.46 14.37 15.4C14.78 15.34 15.63 14.89 15.81 14.38C15.98 13.87 15.98 13.43 15.91 13.31Z" /></svg>
+        <svg style="width:38px;height:38px" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2C6.53 2 2.06 6.47 2.06 11.98C2.06 13.75 2.52 15.42 3.33 16.89L2.03 21.65L6.92 20.37C8.33 21.14 9.94 21.56 11.62 21.56C11.62 21.56 11.63 21.56 11.63 21.56C17.13 21.56 21.61 17.09 21.61 11.58C21.61 8.91 20.57 6.4 18.68 4.51C16.79 2.62 14.27 2 12.04 2M11.63 19.67C10.16 19.67 8.74 19.27 7.5 18.52L7.21 18.35L4.32 19.11L5.09 16.3L4.9 16C4.07 14.69 3.63 13.16 3.63 11.58C3.63 7.15 7.22 3.56 11.64 3.56C13.79 3.56 15.8 4.4 17.31 5.92C18.83 7.43 19.67 9.44 19.67 11.58C19.67 16.02 16.08 19.67 11.63 19.67M15.91 13.31C15.68 13.2 14.54 12.63 14.33 12.56C14.12 12.48 13.96 12.44 13.81 12.67C13.66 12.89 13.23 13.38 13.1 13.53C12.97 13.68 12.83 13.7 12.61 13.59C12.38 13.48 11.66 13.24 10.81 12.48C10.15 11.89 9.7 11.16 9.57 10.94C9.44 10.71 9.56 10.59 9.67 10.48C9.77 10.38 9.89 10.22 10 10.09C10.11 9.97 10.15 9.88 10.22 9.73C10.29 9.59 10.26 9.46 10.2 9.35C10.15 9.24 9.71 8.16 9.53 7.72C9.35 7.28 9.17 7.34 9.04 7.34C8.91 7.33 8.77 7.33 8.62 7.33C8.47 7.33 8.23 7.39 8.03 7.61C7.83 7.83 7.27 8.35 7.27 9.41C7.27 10.47 8.04 11.49 8.15 11.64C8.26 11.79 9.66 13.94 11.81 14.87C12.32 15.09 12.72 15.22 13.03 15.32C13.54 15.48 14 15.46 14.37 15.4C14.78 15.34 15.63 14.89 15.81 14.38C15.98 13.87 15.98 13.43 15.91 13.31Z" /></svg>
     </a>
 
     <footer>
         <p><strong>Erick Tomaz - Personal Trainer</strong><br>
         Maringá - PR</p>
     </footer>
+
+    <script>
+        function criarBolinhas() {
+            const fundo = document.getElementById('fundoAnimado');
+            const quantidade = 35; // Quantidade de bolinhas flutuando
+
+            for (let i = 0; i < quantidade; i++) {
+                const bolinha = document.createElement('div');
+                bolinha.classList.add('bolinha');
+                
+                // Tamanhos variados (10px a 60px)
+                const tamanho = Math.random() * 50 + 10;
+                bolinha.style.width = `${tamanho}px`;
+                bolinha.style.height = `${tamanho}px`;
+                
+                // Posição horizontal aleatória
+                bolinha.style.left = `${Math.random() * 100}%`;
+                
+                // Atraso de animação aleatório para não subirem todas juntas
+                bolinha.style.animationDelay = `${Math.random() * 8}s`;
+                
+                // Duração da animação variada (velocidade)
+                bolinha.style.animationDuration = `${Math.random() * 12 + 8}s`;
+
+                fundo.appendChild(bolinha);
+            }
+        }
+        
+        // Inicia a criação das bolinhas quando o site abre
+        criarBolinhas();
+    </script>
 
 </body>
 </html>
