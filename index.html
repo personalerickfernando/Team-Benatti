@@ -15,7 +15,6 @@
             --branco: #ffffff;
             --vermelho-vivo: #ff0000;
             --vermelho-claro: rgba(255, 0, 0, 0.4);
-            /* FUNDO MAIS CLARO PARA APARECER A IMAGEM (0.85) */
             --fundo-clean-opaco: rgba(255, 255, 255, 0.85); 
             --glow-branco: 0 0 15px rgba(255, 255, 255, 0.7);
         }
@@ -37,7 +36,6 @@
             position: relative;
         }
 
-        /* --- SISTEMA DE BOLINHAS CINZA ESCURO --- */
         .fundo-animado {
             position: fixed;
             top: 0;
@@ -51,7 +49,6 @@
         .bolinha {
             position: absolute;
             border-radius: 50%;
-            /* COR ALTERADA PARA CINZA ESCURO */
             background: rgba(50, 50, 50, 0.2); 
             animation: flutuar linear infinite;
         }
@@ -137,14 +134,12 @@
 
         .container { max-width: 1000px; margin: auto; padding: 40px 20px; }
 
-        /* CARDS COM RISCOS VERMELHOS */
         .servico-card, .plano-card {
             background: var(--branco); 
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.03);
             border: 1px solid var(--preto);
-            /* RISCO VERMELHO LATERAL */
             border-left: 6px solid var(--vermelho-claro); 
             transition: 0.3s ease;
             position: relative;
@@ -171,6 +166,12 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             margin-bottom: 70px;
+        }
+
+        /* Centraliza os 2 planos quando houver espaço */
+        .planos {
+            max-width: 700px;
+            margin: auto;
         }
 
         .preco { font-size: 2.3em; font-weight: bold; margin: 25px 0; color: var(--preto); font-family: Arial, sans-serif; }
@@ -274,12 +275,6 @@
         </div>
 
         <div class="planos">
-            <div class="plano-card">
-                <h3><span class="icone-plano">🗓️</span>Plano Mensal</h3>
-                <p>Acompanhamento mensal com ajustes constantes.</p>
-                <div class="preco">R$ 69,90</div>
-                <a href="https://mpago.la/2EVdv2o" target="_blank" class="btn-assine">ASSINE AGORA</a>
-            </div>
             <div class="plano-card">
                 <h3><span class="icone-plano">🎯</span>Plano Avulso</h3>
                 <p>Montagem de treino específica para seu objetivo atual.</p>
